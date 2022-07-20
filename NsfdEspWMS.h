@@ -1,18 +1,5 @@
-/**
- * WiFiManager.h
- * 
- * WiFiManager, a library for the ESP8266/Arduino platform
- * for configuration of WiFi credentials using a Captive Portal
- * 
- * @author Creator tzapu
- * @author tablatronix
- * @version 0.0.0
- * @license MIT
- */
-
-
-#ifndef WiFiManager_h
-#define WiFiManager_h
+#ifndef NsfdEspWMS_h
+#define NsfdEspWMS_h
 
 #if defined(ESP8266) || defined(ESP32)
 
@@ -37,10 +24,6 @@
 #define WM_NOCOUNTRY       // esp8266 no country
 #define WM_NOAUTH          // no httpauth
 #define WM_NOSOFTAPSSID    // no softapssid() @todo shim
-#endif
-
-#ifdef ARDUINO_ESP32S3_DEV
-#define WM_NOTEMP
 #endif
 
 // #include "soc/efuse_reg.h" // include to add efuse chip rev to info, getChipRevision() is almost always the same though, so not sure why it matters.
@@ -106,8 +89,6 @@
             #include <WebServer.h>
         #else
             #include <ESP8266WebServer.h>
-            // Forthcoming official ? probably never happening
-            // https://github.com/esp8266/ESPWebServer
         #endif
     #endif
 
@@ -129,7 +110,7 @@
 
 #include <DNSServer.h>
 #include <memory>
-#include "strings_en.h"
+#include "strings_tr.h"
 
 #ifndef WIFI_MANAGER_MAX_PARAMS
     #define WIFI_MANAGER_MAX_PARAMS 5 // params will autoincrement and realloc by this amount when max is reached
@@ -140,20 +121,20 @@
 #define WFM_NO_LABEL 0
 #define WFM_LABEL_DEFAULT 1
 
-class WiFiManagerParameter {
+class NsfdEspWMSParameter {
   public:
     /** 
-        Create custom parameters that can be added to the WiFiManager setup web page
+        Create custom parameters that can be added to the NsfdEspWMS setup web page
         @id is used for HTTP queries and must not contain spaces nor other special characters
     */
-    WiFiManagerParameter();
-    WiFiManagerParameter(const char *custom);
-    WiFiManagerParameter(const char *id, const char *label);
-    WiFiManagerParameter(const char *id, const char *label, const char *defaultValue, int length);
-    WiFiManagerParameter(const char *id, const char *label, const char *defaultValue, int length, const char *custom);
-    WiFiManagerParameter(const char *id, const char *label, const char *defaultValue, int length, const char *custom, int labelPlacement);
-    ~WiFiManagerParameter();
-    // WiFiManagerParameter& operator=(const WiFiManagerParameter& rhs);
+    NsfdEspWMSParameter();
+    NsfdEspWMSParameter(const char *custom);
+    NsfdEspWMSParameter(const char *id, const char *label);
+    NsfdEspWMSParameter(const char *id, const char *label, const char *defaultValue, int length);
+    NsfdEspWMSParameter(const char *id, const char *label, const char *defaultValue, int length, const char *custom);
+    NsfdEspWMSParameter(const char *id, const char *label, const char *defaultValue, int length, const char *custom, int labelPlacement);
+    ~NsfdEspWMSParameter();
+    // NsfdEspWMSParameter& operator=(const NsfdEspWMSParameter& rhs);
 
     const char *getID() const;
     const char *getValue() const;
@@ -168,7 +149,7 @@ class WiFiManagerParameter {
     void init(const char *id, const char *label, const char *defaultValue, int length, const char *custom, int labelPlacement);
 
   private:
-    WiFiManagerParameter& operator=(const WiFiManagerParameter&);
+    NsfdEspWMSParameter& operator=(const NsfdEspWMSParameter&);
     const char *_id;
     const char *_label;
     char       *_value;
@@ -176,17 +157,17 @@ class WiFiManagerParameter {
     int         _labelPlacement;
   protected:
     const char *_customHTML;
-    friend class WiFiManager;
+    friend class NsfdEspWMS;
 };
 
 
-class WiFiManager
+class NsfdEspWMS
 {
   public:
-    WiFiManager(Print& consolePort);
-    WiFiManager();
-    ~WiFiManager();
-    void WiFiManagerInit();
+    NsfdEspWMS(Print& consolePort);
+    NsfdEspWMS();
+    ~NsfdEspWMS();
+    void NsfdEspWMSInit();
 
     // auto connect to saved wifi, or custom, and start config portal on failures
     boolean       autoConnect();
@@ -226,10 +207,10 @@ class WiFiManager
     bool          erase(bool opt);
 
     //adds a custom parameter, returns false on failure
-    bool          addParameter(WiFiManagerParameter *p);
+    bool          addParameter(NsfdEspWMSParameter *p);
 
     //returns the list of Parameters
-    WiFiManagerParameter** getParameters();
+    NsfdEspWMSParameter** getParameters();
 
     // returns the Parameters Count
     int           getParametersCount();
@@ -237,7 +218,7 @@ class WiFiManager
     // SET CALLBACKS
 
     //called after AP mode and config portal has started
-    void          setAPCallback( std::function<void(WiFiManager*)> func );
+    void          setAPCallback( std::function<void(NsfdEspWMS*)> func );
 
     //called after webserver has started
     void          setWebServerCallback( std::function<void()> func );
@@ -248,14 +229,11 @@ class WiFiManager
     //called when wifi settings have been changed and connection was successful ( or setBreakAfterConfig(true) )
     void          setSaveConfigCallback( std::function<void()> func );
 
-    //called when saving params-in-wifi or params before anything else happens (eg wifi)
-    void          setPreSaveConfigCallback( std::function<void()> func );
-
-    //called when saving params before anything else happens
-    void          setPreSaveParamsCallback( std::function<void()> func );
-
     //called when saving either params-in-wifi or params page
     void          setSaveParamsCallback( std::function<void()> func );
+
+    //called when saving params-in-wifi or params before anything else happens (eg wifi)
+    void          setPreSaveConfigCallback( std::function<void()> func );
 
     //called just before doing OTA update
     void          setPreOtaUpdateCallback( std::function<void()> func );
@@ -368,7 +346,7 @@ class WiFiManager
     void          setMenu(std::vector<const char*>& menu);
     void          setMenu(const char* menu[], uint8_t size);
     
-    // set the webapp title, default WiFiManager
+    // set the webapp title, default NsfdEspWMS
     void          setTitle(String title);
 
     // add params to its own menu page and remove from wifi, NOT TO BE COMBINED WITH setMenu!
@@ -493,8 +471,7 @@ class WiFiManager
     uint8_t       _connectRetries         = 1; // number of sta connect retries, force reconnect, wait loop (connectimeout) does not always work and first disconnect bails
     bool          _aggresiveReconn        = true; // use an agrressive reconnect strategy, WILL delay conxs
                                                    // on some conn failure modes will add delays and many retries to work around esp and ap bugs, ie, anti de-auth protections
-                                                   // https://github.com/tzapu/WiFiManager/issues/1067
-    bool          _allowExit              = true; // allow exit in nonblocking, else user exit/abort calls will be ignored including cptimeout
+    bool          _allowExit              = true; // allow exit non blocking
 
     #ifdef ESP32
     wifi_event_id_t wm_event_id           = 0;
@@ -530,12 +507,11 @@ class WiFiManager
     const char*   _customHeadElement      = ""; // store custom head element html from user isnide <head>
     const char*   _customMenuHTML         = ""; // store custom head element html from user inside <>
     String        _bodyClass              = ""; // class to add to body
-    String        _title                  = FPSTR(S_brand); // app title -  default WiFiManager
+    String        _title                  = FPSTR(S_brand); // app title -  default NsfdEspWMS
 
     // internal options
     
     // wifiscan notes
-    // currently disabled due to issues with caching, sometimes first scan is empty esp32 wifi not init yet race, or portals hit server nonstop flood
     // The following are background wifi scanning optimizations
     // experimental to make scans faster, preload scans after starting cp, and visiting home page, so when you click wifi its already has your list
     // ideally we would add async and xhr here but I am holding off on js requirements atm
@@ -675,10 +651,10 @@ class WiFiManager
     boolean       storeSTAmode        = true; // option store persistent STA mode in connectwifi 
     int           timer               = 0;    // timer for debug throttle for numclients, and portal timeout messages
     
-    // WiFiManagerParameter
+    // NsfdEspWMSParameter
     int         _paramsCount          = 0;
     int         _max_params;
-    WiFiManagerParameter** _params    = NULL;
+    NsfdEspWMSParameter** _params    = NULL;
 
     // debugging
     typedef enum {
@@ -703,7 +679,7 @@ class WiFiManager
     #endif
 
     // override debug level OFF
-    #ifdef WM_NODEBUG
+    #ifndef WM_NODEBUG
     #undef WM_DEBUG_LEVEL
     #endif
 
@@ -732,11 +708,10 @@ class WiFiManager
 
     // callbacks
     // @todo use cb list (vector) maybe event ids, allow no return value
-    std::function<void(WiFiManager*)> _apcallback;
+    std::function<void(NsfdEspWMS*)> _apcallback;
     std::function<void()> _webservercallback;
     std::function<void()> _savewificallback;
-    std::function<void()> _presavewificallback;
-    std::function<void()> _presaveparamscallback;
+    std::function<void()> _presavecallback;
     std::function<void()> _saveparamscallback;
     std::function<void()> _resetcallback;
     std::function<void()> _preotaupdatecallback;

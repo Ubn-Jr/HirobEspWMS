@@ -11,7 +11,7 @@ before_install:
   - sudo ln -s /usr/local/share/arduino/arduino /usr/local/bin/arduino
 
 install:
-  - ln -s $PWD /usr/local/share/arduino/libraries/WiFiManager
+  - ln -s $PWD /usr/local/share/arduino/libraries/NsfdEspWMS
   - arduino --pref "boardsmanager.additional.urls=http://arduino.esp8266.com/stable/package_esp8266com_index.json,http://dl.espressif.com/dl/package_esp32_index.json" --save-prefs
   - arduino --install-library "ArduinoJson:6.18.0"
   - arduino --install-boards esp8266:esp8266

@@ -203,7 +203,6 @@ button:hover{
 		p = l.nextElementSibling.classList.contains('l');
 		document.getElementById('p').disabled = !p;
 		if(p)document.getElementById('p').focus()};
-		function f() {var x = document.getElementById('p');x.type==='password'?x.type='text':x.type='password';}
 		</script>
 <!-- /HTTP_SCRIPT -->
 <!-- HTTP_HEAD_END -->
@@ -218,7 +217,7 @@ button:hover{
 			<!-- HTTP_PORTAL_OPTIONS -->
 			<!-- /HTTP_PORTAL_OPTIONS -->
 			<!-- HTTP_PORTAL_MENU[] -->
-			<form action='/wifi' method='get'><button>Configure WiFi</button></form><br/>
+			<form action='/wifi' method='get'><button>Configure WiFi Hsm</button></form><br/>
 			<form action='/0wifi' method='get'><button>Configure WiFi (No Scan)</button></form><br/>
 			<form action='/info' method='get'><button>Info</button></form><br/>
 			<form action='/param' method='get'><button>Setup</button></form><br/>
@@ -251,7 +250,7 @@ button:hover{
 			<div><a href='#p' onclick='c(this)'>{v}</a><div role='img' aria-label='{r}%' title='{r}%' class='q q-{q} {i}'></div></div>
 			<!-- /HTTP_ITEM -->
 			<!-- HTTP_FORM_START -->
-			<form method='get' action='wifisave'><label for='s'>SSID</label><br/><input id='s' name='s' length=32 placeholder='SSID'><br/><label for='p'>Password</label><input id='p' name='p' length=64 type='password' placeholder='password'><input type='checkbox' onclick='f()'> Show Password<br/>
+			<form method='get' action='wifisave'><label for='s'>SSID</label><br/><input id='s' name='s' length=32 placeholder='SSID'><br/><label for='p'>Password</label><input id='p' name='p' length=64 type='password' placeholder='password'><br/>
 			<!-- /HTTP_FORM_START -->
 			<!-- SAMPLE -->
 			<h3>custom parameter</h3><hr>
@@ -293,7 +292,7 @@ button:hover{
 			<!-- /HTTP_STATUS_OFFFAIL -->
 			</div>
 			<!-- HTTP_STATUS_NONE -->
-			<div class='msg'>No AP set</div>
+			<div class='msg'>No AP set 2</div>
 			<!-- /HTTP_STATUS_NONE -->
 			<!-- SAMPLE -->
 			<div class='msg P'><h4>H4 Color Header P</h4>content</div>
@@ -342,7 +341,7 @@ button:hover{
 		 		Build_date<br/>
 		 		Build_file<br/>
 		 		Arduino_version<br/>
-		 		<p/>Github <a href='https://github.com/tzapu/WiFiManager'>https://github.com/tzapu/WiFiManager</a>
+		 		<p/>Github <a href='https://github.com/HsmTeknoloji/NsfdEspWMS'>https://github.com/HsmTeknoloji/NsfdEspWMS</a>
 			<!-- /HTTP_HELP -->
 			<!-- FORM_UPLOAD -->
 			<Br/><br/>Form UPLOAD<br/>

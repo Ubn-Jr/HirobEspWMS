@@ -1,13 +1,13 @@
 #######################################
-# Syntax Coloring Map For WifiManager
+# Syntax Coloring Map For NsfdEspWMS
 #######################################
 
 #######################################
 # Datatypes (KEYWORD1)
 #######################################
 
-WiFiManager	KEYWORD1
-WiFiManagerParameter KEYWORD1
+NsfdEspWMS	KEYWORD1
+NsfdEspWMSParameter KEYWORD1
 
 
 #######################################
