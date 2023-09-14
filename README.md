@@ -1,4 +1,4 @@
-# NsfdEspWMS 
+# HirobEspWMS 
 
 ESP8266 WiFi Connection manager with web captive portal 
 
@@ -13,6 +13,3 @@ Usage :
 
 ```
 
-## Developers:
-<img src="https://github.com/HsmTeknoloji/.github/blob/main/hsmtek-logo.png?raw=true" width="200"/>
-Web Site        : www.hsmteknoloji.com <br />
