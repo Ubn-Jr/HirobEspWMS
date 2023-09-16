@@ -1,5 +1,5 @@
-#ifndef NsfdEspWMS_h
-#define NsfdEspWMS_h
+#ifndef HirobEspWMS_h
+#define HirobEspWMS_h
 
 #if defined(ESP8266) || defined(ESP32)
 
@@ -121,20 +121,20 @@
 #define WFM_NO_LABEL 0
 #define WFM_LABEL_DEFAULT 1
 
-class NsfdEspWMSParameter {
+class HirobEspWMSParameter {
   public:
     /** 
-        Create custom parameters that can be added to the NsfdEspWMS setup web page
+        Create custom parameters that can be added to the HirobEspWMS setup web page
         @id is used for HTTP queries and must not contain spaces nor other special characters
     */
-    NsfdEspWMSParameter();
-    NsfdEspWMSParameter(const char *custom);
-    NsfdEspWMSParameter(const char *id, const char *label);
-    NsfdEspWMSParameter(const char *id, const char *label, const char *defaultValue, int length);
-    NsfdEspWMSParameter(const char *id, const char *label, const char *defaultValue, int length, const char *custom);
-    NsfdEspWMSParameter(const char *id, const char *label, const char *defaultValue, int length, const char *custom, int labelPlacement);
-    ~NsfdEspWMSParameter();
-    // NsfdEspWMSParameter& operator=(const NsfdEspWMSParameter& rhs);
+    HirobEspWMSParameter();
+    HirobEspWMSParameter(const char *custom);
+    HirobEspWMSParameter(const char *id, const char *label);
+    HirobEspWMSParameter(const char *id, const char *label, const char *defaultValue, int length);
+    HirobEspWMSParameter(const char *id, const char *label, const char *defaultValue, int length, const char *custom);
+    HirobEspWMSParameter(const char *id, const char *label, const char *defaultValue, int length, const char *custom, int labelPlacement);
+    ~HirobEspWMSParameter();
+    // HirobEspWMSParameter& operator=(const HirobEspWMSParameter& rhs);
 
     const char *getID() const;
     const char *getValue() const;
@@ -149,7 +149,7 @@ class NsfdEspWMSParameter {
     void init(const char *id, const char *label, const char *defaultValue, int length, const char *custom, int labelPlacement);
 
   private:
-    NsfdEspWMSParameter& operator=(const NsfdEspWMSParameter&);
+    HirobEspWMSParameter& operator=(const HirobEspWMSParameter&);
     const char *_id;
     const char *_label;
     char       *_value;
@@ -157,17 +157,17 @@ class NsfdEspWMSParameter {
     int         _labelPlacement;
   protected:
     const char *_customHTML;
-    friend class NsfdEspWMS;
+    friend class HirobEspWMS;
 };
 
 
-class NsfdEspWMS
+class HirobEspWMS
 {
   public:
-    NsfdEspWMS(Print& consolePort);
-    NsfdEspWMS();
-    ~NsfdEspWMS();
-    void NsfdEspWMSInit();
+    HirobEspWMS(Print& consolePort);
+    HirobEspWMS();
+    ~HirobEspWMS();
+    void HirobEspWMSInit();
 
     // auto connect to saved wifi, or custom, and start config portal on failures
     boolean       autoConnect();
@@ -207,10 +207,10 @@ class NsfdEspWMS
     bool          erase(bool opt);
 
     //adds a custom parameter, returns false on failure
-    bool          addParameter(NsfdEspWMSParameter *p);
+    bool          addParameter(HirobEspWMSParameter *p);
 
     //returns the list of Parameters
-    NsfdEspWMSParameter** getParameters();
+    HirobEspWMSParameter** getParameters();
 
     // returns the Parameters Count
     int           getParametersCount();
@@ -218,7 +218,7 @@ class NsfdEspWMS
     // SET CALLBACKS
 
     //called after AP mode and config portal has started
-    void          setAPCallback( std::function<void(NsfdEspWMS*)> func );
+    void          setAPCallback( std::function<void(HirobEspWMS*)> func );
 
     //called after webserver has started
     void          setWebServerCallback( std::function<void()> func );
@@ -346,7 +346,7 @@ class NsfdEspWMS
     void          setMenu(std::vector<const char*>& menu);
     void          setMenu(const char* menu[], uint8_t size);
     
-    // set the webapp title, default NsfdEspWMS
+    // set the webapp title, default HirobEspWMS
     void          setTitle(String title);
 
     // add params to its own menu page and remove from wifi, NOT TO BE COMBINED WITH setMenu!
@@ -507,7 +507,7 @@ class NsfdEspWMS
     const char*   _customHeadElement      = ""; // store custom head element html from user isnide <head>
     const char*   _customMenuHTML         = ""; // store custom head element html from user inside <>
     String        _bodyClass              = ""; // class to add to body
-    String        _title                  = FPSTR(S_brand); // app title -  default NsfdEspWMS
+    String        _title                  = FPSTR(S_brand); // app title -  default HirobEspWMS
 
     // internal options
     
@@ -651,10 +651,10 @@ class NsfdEspWMS
     boolean       storeSTAmode        = true; // option store persistent STA mode in connectwifi 
     int           timer               = 0;    // timer for debug throttle for numclients, and portal timeout messages
     
-    // NsfdEspWMSParameter
+    // HirobEspWMSParameter
     int         _paramsCount          = 0;
     int         _max_params;
-    NsfdEspWMSParameter** _params    = NULL;
+    HirobEspWMSParameter** _params    = NULL;
 
     // debugging
     typedef enum {
@@ -708,7 +708,7 @@ class NsfdEspWMS
 
     // callbacks
     // @todo use cb list (vector) maybe event ids, allow no return value
-    std::function<void(NsfdEspWMS*)> _apcallback;
+    std::function<void(HirobEspWMS*)> _apcallback;
     std::function<void()> _webservercallback;
     std::function<void()> _savewificallback;
     std::function<void()> _presavecallback;

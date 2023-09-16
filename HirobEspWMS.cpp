@@ -1,16 +1,16 @@
-#include "NsfdEspWMS.h"
+#include "HirobEspWMS"
 
 #if defined(ESP8266) || defined(ESP32)
 
 #ifdef ESP32
-uint8_t NsfdEspWMS::_lastconxresulttmp = WL_IDLE_STATUS;
+uint8_t HirobEspWMSEspWMS::_lastconxresulttmp = WL_IDLE_STATUS;
 #endif
 
-NsfdEspWMSParameter::NsfdEspWMSParameter() {
-  NsfdEspWMSParameter("");
+HirobEspWMSEspWMSParameter::HirobEspWMSEspWMSParameter() {
+  HirobEspWMSEspWMSParameter("");
 }
 
-NsfdEspWMSParameter::NsfdEspWMSParameter(const char *custom) {
+HirobEspWMSEspWMSParameter::HirobEspWMSEspWMSParameter(const char *custom) {
   _id             = NULL;
   _label          = NULL;
   _length         = 1;
@@ -19,23 +19,23 @@ NsfdEspWMSParameter::NsfdEspWMSParameter(const char *custom) {
   _customHTML     = custom;
 }
 
-NsfdEspWMSParameter::NsfdEspWMSParameter(const char *id, const char *label) {
+HirobEspWMSEspWMSParameter::HirobEspWMSEspWMSParameter(const char *id, const char *label) {
   init(id, label, "", 0, "", WFM_LABEL_DEFAULT);
 }
 
-NsfdEspWMSParameter::NsfdEspWMSParameter(const char *id, const char *label, const char *defaultValue, int length) {
+HirobEspWMSEspWMSParameter::HirobEspWMSEspWMSParameter(const char *id, const char *label, const char *defaultValue, int length) {
   init(id, label, defaultValue, length, "", WFM_LABEL_DEFAULT);
 }
 
-NsfdEspWMSParameter::NsfdEspWMSParameter(const char *id, const char *label, const char *defaultValue, int length, const char *custom) {
+HirobEspWMSEspWMSParameter::HirobEspWMSEspWMSParameter(const char *id, const char *label, const char *defaultValue, int length, const char *custom) {
   init(id, label, defaultValue, length, custom, WFM_LABEL_DEFAULT);
 }
 
-NsfdEspWMSParameter::NsfdEspWMSParameter(const char *id, const char *label, const char *defaultValue, int length, const char *custom, int labelPlacement) {
+HirobEspWMSEspWMSParameter::HirobEspWMSEspWMSParameter(const char *id, const char *label, const char *defaultValue, int length, const char *custom, int labelPlacement) {
   init(id, label, defaultValue, length, custom, labelPlacement);
 }
 
-void NsfdEspWMSParameter::init(const char *id, const char *label, const char *defaultValue, int length, const char *custom, int labelPlacement) {
+void HirobEspWMSEspWMSParameter::init(const char *id, const char *label, const char *defaultValue, int length, const char *custom, int labelPlacement) {
   _id             = id;
   _label          = label;
   _labelPlacement = labelPlacement;
@@ -43,21 +43,21 @@ void NsfdEspWMSParameter::init(const char *id, const char *label, const char *de
   setValue(defaultValue,length);
 }
 
-NsfdEspWMSParameter::~NsfdEspWMSParameter() {
+HirobEspWMSEspWMSParameter::~HirobEspWMSEspWMSParameter() {
   if (_value != NULL) {
     delete[] _value;
   }
-  _length=0; // setting length 0, ideally the entire parameter should be removed, or added to NsfdEspWMS scope so it follows
+  _length=0; // setting length 0, ideally the entire parameter should be removed, or added to HirobEspWMSEspWMS scope so it follows
 }
 
-// NsfdEspWMSParameter& NsfdEspWMSParameter::operator=(const NsfdEspWMSParameter& rhs){
+// HirobEspWMSEspWMSParameter& HirobEspWMSEspWMSParameter::operator=(const HirobEspWMSEspWMSParameter& rhs){
 //   Serial.println("copy assignment op called");
 //   (*this->_value) = (*rhs._value);
 //   return *this;
 // }
 
 // @note debug is not available in wmparameter class
-void NsfdEspWMSParameter::setValue(const char *defaultValue, int length) {
+void HirobEspWMSEspWMSParameter::setValue(const char *defaultValue, int length) {
   if(!_id){
     // Serial.println("cannot set value of this parameter");
     return;
@@ -76,35 +76,35 @@ void NsfdEspWMSParameter::setValue(const char *defaultValue, int length) {
     strncpy(_value, defaultValue, _length);
   }
 }
-const char* NsfdEspWMSParameter::getValue() const {
+const char* HirobEspWMSEspWMSParameter::getValue() const {
   // Serial.println(printf("Address of _value is %p\n", (void *)_value)); 
   return _value;
 }
-const char* NsfdEspWMSParameter::getID() const {
+const char* HirobEspWMSEspWMSParameter::getID() const {
   return _id;
 }
-const char* NsfdEspWMSParameter::getPlaceholder() const {
+const char* HirobEspWMSEspWMSParameter::getPlaceholder() const {
   return _label;
 }
-const char* NsfdEspWMSParameter::getLabel() const {
+const char* HirobEspWMSEspWMSParameter::getLabel() const {
   return _label;
 }
-int NsfdEspWMSParameter::getValueLength() const {
+int HirobEspWMSEspWMSParameter::getValueLength() const {
   return _length;
 }
-int NsfdEspWMSParameter::getLabelPlacement() const {
+int HirobEspWMSEspWMSParameter::getLabelPlacement() const {
   return _labelPlacement;
 }
-const char* NsfdEspWMSParameter::getCustomHTML() const {
+const char* HirobEspWMSEspWMSParameter::getCustomHTML() const {
   return _customHTML;
 }
 
 /**
  * [addParameter description]
  * @access public
- * @param {[type]} NsfdEspWMSParameter *p [description]
+ * @param {[type]} HirobEspWMSEspWMSParameter *p [description]
  */
-bool NsfdEspWMS::addParameter(NsfdEspWMSParameter *p) {
+bool HirobEspWMSEspWMS::addParameter(HirobEspWMSEspWMSParameter *p) {
 
   // check param id is valid, unless null
   if(p->getID()){
@@ -121,9 +121,9 @@ bool NsfdEspWMS::addParameter(NsfdEspWMSParameter *p) {
   // init params if never malloc
   if(_params == NULL){
     #ifdef WM_DEBUG_LEVEL
-    DEBUG_WM(DEBUG_DEV,F("allocating params bytes:"),_max_params * sizeof(NsfdEspWMSParameter*));        
+    DEBUG_WM(DEBUG_DEV,F("allocating params bytes:"),_max_params * sizeof(HirobEspWMSEspWMSParameter*));        
     #endif
-    _params = (NsfdEspWMSParameter**)malloc(_max_params * sizeof(NsfdEspWMSParameter*));
+    _params = (HirobEspWMSEspWMSParameter**)malloc(_max_params * sizeof(HirobEspWMSEspWMSParameter*));
   }
 
   // resize the params array by increment of WIFI_MANAGER_MAX_PARAMS
@@ -131,9 +131,9 @@ bool NsfdEspWMS::addParameter(NsfdEspWMSParameter *p) {
     _max_params += WIFI_MANAGER_MAX_PARAMS;
     #ifdef WM_DEBUG_LEVEL
     DEBUG_WM(DEBUG_DEV,F("Updated _max_params:"),_max_params);
-    DEBUG_WM(DEBUG_DEV,F("re-allocating params bytes:"),_max_params * sizeof(NsfdEspWMSParameter*));    
+    DEBUG_WM(DEBUG_DEV,F("re-allocating params bytes:"),_max_params * sizeof(HirobEspWMSEspWMSParameter*));    
     #endif
-    NsfdEspWMSParameter** new_params = (NsfdEspWMSParameter**)realloc(_params, _max_params * sizeof(NsfdEspWMSParameter*));
+    HirobEspWMSEspWMSParameter** new_params = (HirobEspWMSEspWMSParameter**)realloc(_params, _max_params * sizeof(HirobEspWMSEspWMSParameter*));
     #ifdef WM_DEBUG_LEVEL
     // DEBUG_WM(WIFI_MANAGER_MAX_PARAMS);
     // DEBUG_WM(_paramsCount);
@@ -162,7 +162,7 @@ bool NsfdEspWMS::addParameter(NsfdEspWMSParameter *p) {
  * [getParameters description]
  * @access public
  */
-NsfdEspWMSParameter** NsfdEspWMS::getParameters() {
+HirobEspWMSEspWMSParameter** HirobEspWMSEspWMS::getParameters() {
   return _params;
 }
 
@@ -170,36 +170,36 @@ NsfdEspWMSParameter** NsfdEspWMS::getParameters() {
  * [getParametersCount description]
  * @access public
  */
-int NsfdEspWMS::getParametersCount() {
+int HirobEspWMSEspWMS::getParametersCount() {
   return _paramsCount;
 }
 
 /**
  * --------------------------------------------------------------------------------
- *  NsfdEspWMS 
+ *  HirobEspWMSEspWMS 
  * --------------------------------------------------------------------------------
 **/
 
 // constructors
-NsfdEspWMS::NsfdEspWMS(Print& consolePort):_debugPort(consolePort){
-  NsfdEspWMSInit();
+HirobEspWMSEspWMS::HirobEspWMSEspWMS(Print& consolePort):_debugPort(consolePort){
+  HirobEspWMSEspWMSInit();
 }
 
-NsfdEspWMS::NsfdEspWMS() {
-  NsfdEspWMSInit();  
+HirobEspWMSEspWMS::HirobEspWMSEspWMS() {
+  HirobEspWMSEspWMSInit();  
 }
 
-void NsfdEspWMS::NsfdEspWMSInit(){
+void HirobEspWMSEspWMS::HirobEspWMSEspWMSInit(){
   setMenu(_menuIdsDefault);
   if(_debug && _debugLevel >= DEBUG_DEV) debugPlatformInfo();
   _max_params = WIFI_MANAGER_MAX_PARAMS;
 }
 
 // destructor
-NsfdEspWMS::~NsfdEspWMS() {
+HirobEspWMSEspWMS::~HirobEspWMSEspWMS() {
   _end();
   // parameters
-  // @todo below belongs to NsfdEspWMSparameter
+  // @todo below belongs to HirobEspWMSEspWMSparameter
   if (_params != NULL){
     #ifdef WM_DEBUG_LEVEL
     DEBUG_WM(DEBUG_DEV,F("freeing allocated params!"));
@@ -209,7 +209,7 @@ NsfdEspWMS::~NsfdEspWMS() {
   }
 
   // @todo remove event
-  // WiFi.onEvent(std::bind(&NsfdEspWMS::WiFiEvent,this,_1,_2));
+  // WiFi.onEvent(std::bind(&HirobEspWMSEspWMS::WiFiEvent,this,_1,_2));
   #ifdef ESP32
     WiFi.removeEvent(wm_event_id);
   #endif
@@ -219,7 +219,7 @@ NsfdEspWMS::~NsfdEspWMS() {
   #endif
 }
 
-void NsfdEspWMS::_begin(){
+void HirobEspWMSEspWMS::_begin(){
   if(_hasBegun) return;
   _hasBegun = true;
   // _usermode = WiFi.getMode();
@@ -229,7 +229,7 @@ void NsfdEspWMS::_begin(){
   #endif
 }
 
-void NsfdEspWMS::_end(){
+void HirobEspWMSEspWMS::_end(){
   _hasBegun = false;
   if(_userpersistent) WiFi.persistent(true); // reenable persistent, there is no getter we rely on _userpersistent
   // if(_usermode != WIFI_OFF) WiFi.mode(_usermode);
@@ -237,7 +237,7 @@ void NsfdEspWMS::_end(){
 
 // AUTOCONNECT
 
-boolean NsfdEspWMS::autoConnect() {
+boolean HirobEspWMSEspWMS::autoConnect() {
   String ssid = getDefaultAPName();
   return autoConnect(ssid.c_str(), NULL);
 }
@@ -249,7 +249,7 @@ boolean NsfdEspWMS::autoConnect() {
  * @param  {[type]} char const         *apPassword [description]
  * @return {[type]}      [description]
  */
-boolean NsfdEspWMS::autoConnect(char const *apName, char const *apPassword) {
+boolean HirobEspWMSEspWMS::autoConnect(char const *apName, char const *apPassword) {
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(F("AutoConnect"));
   #endif
@@ -339,7 +339,7 @@ boolean NsfdEspWMS::autoConnect(char const *apName, char const *apPassword) {
   return res;
 }
 
-bool NsfdEspWMS::setupHostname(bool restart){
+bool HirobEspWMSEspWMS::setupHostname(bool restart){
   if(_hostname == "") {
     #ifdef WM_DEBUG_LEVEL
     DEBUG_WM(DEBUG_DEV,F("No Hostname to set"));
@@ -403,7 +403,7 @@ bool NsfdEspWMS::setupHostname(bool restart){
 }
 
 // CONFIG PORTAL
-bool NsfdEspWMS::startAP(){
+bool HirobEspWMSEspWMS::startAP(){
   bool ret = true;
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(F("StartAP with SSID: "),_apName);
@@ -496,7 +496,7 @@ bool NsfdEspWMS::startAP(){
  * @access public
  * @return {[type]} [description]
  */
-void NsfdEspWMS::startWebPortal() {
+void HirobEspWMSEspWMS::startWebPortal() {
   if(configPortalActive || webPortalActive) return;
   connect = abort = false;
   setupConfigPortal();
@@ -508,7 +508,7 @@ void NsfdEspWMS::startWebPortal() {
  * @access public
  * @return {[type]} [description]
  */
-void NsfdEspWMS::stopWebPortal() {
+void HirobEspWMSEspWMS::stopWebPortal() {
   if(!configPortalActive && !webPortalActive) return;
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(DEBUG_VERBOSE,F("Stopping Web Portal"));  
@@ -517,7 +517,7 @@ void NsfdEspWMS::stopWebPortal() {
   shutdownConfigPortal();
 }
 
-boolean NsfdEspWMS::configPortalHasTimeout(){
+boolean HirobEspWMSEspWMS::configPortalHasTimeout(){
     if(!configPortalActive) return false;
     uint16_t logintvl = 30000; // how often to emit timeing out counter logging
 
@@ -557,7 +557,7 @@ boolean NsfdEspWMS::configPortalHasTimeout(){
     return false;
 }
 
-void NsfdEspWMS::setupHTTPServer(){
+void HirobEspWMSEspWMS::setupHTTPServer(){
 
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(F("Starting Web Portal"));
@@ -583,22 +583,22 @@ void NsfdEspWMS::setupHTTPServer(){
   /* Setup httpd callbacks, web pages: root, wifi config pages, SO captive portal detectors and not found. */
 
   // G macro workaround for Uri() bug https://github.com/esp8266/Arduino/issues/7102
-  server->on(WM_G(R_root),       std::bind(&NsfdEspWMS::handleRoot, this));
-  server->on(WM_G(R_wifi),       std::bind(&NsfdEspWMS::handleWifi, this, true));
-  server->on(WM_G(R_wifinoscan), std::bind(&NsfdEspWMS::handleWifi, this, false));
-  server->on(WM_G(R_wifisave),   std::bind(&NsfdEspWMS::handleWifiSave, this));
-  server->on(WM_G(R_info),       std::bind(&NsfdEspWMS::handleInfo, this));
-  server->on(WM_G(R_param),      std::bind(&NsfdEspWMS::handleParam, this));
-  server->on(WM_G(R_paramsave),  std::bind(&NsfdEspWMS::handleParamSave, this));
-  server->on(WM_G(R_restart),    std::bind(&NsfdEspWMS::handleReset, this));
-  server->on(WM_G(R_exit),       std::bind(&NsfdEspWMS::handleExit, this));
-  server->on(WM_G(R_close),      std::bind(&NsfdEspWMS::handleClose, this));
-  server->on(WM_G(R_erase),      std::bind(&NsfdEspWMS::handleErase, this, false));
-  server->on(WM_G(R_status),     std::bind(&NsfdEspWMS::handleWiFiStatus, this));
-  server->onNotFound (std::bind(&NsfdEspWMS::handleNotFound, this));
+  server->on(WM_G(R_root),       std::bind(&HirobEspWMSEspWMS::handleRoot, this));
+  server->on(WM_G(R_wifi),       std::bind(&HirobEspWMSEspWMS::handleWifi, this, true));
+  server->on(WM_G(R_wifinoscan), std::bind(&HirobEspWMSEspWMS::handleWifi, this, false));
+  server->on(WM_G(R_wifisave),   std::bind(&HirobEspWMSEspWMS::handleWifiSave, this));
+  server->on(WM_G(R_info),       std::bind(&HirobEspWMSEspWMS::handleInfo, this));
+  server->on(WM_G(R_param),      std::bind(&HirobEspWMSEspWMS::handleParam, this));
+  server->on(WM_G(R_paramsave),  std::bind(&HirobEspWMSEspWMS::handleParamSave, this));
+  server->on(WM_G(R_restart),    std::bind(&HirobEspWMSEspWMS::handleReset, this));
+  server->on(WM_G(R_exit),       std::bind(&HirobEspWMSEspWMS::handleExit, this));
+  server->on(WM_G(R_close),      std::bind(&HirobEspWMSEspWMS::handleClose, this));
+  server->on(WM_G(R_erase),      std::bind(&HirobEspWMSEspWMS::handleErase, this, false));
+  server->on(WM_G(R_status),     std::bind(&HirobEspWMSEspWMS::handleWiFiStatus, this));
+  server->onNotFound (std::bind(&HirobEspWMSEspWMS::handleNotFound, this));
   
-  server->on(WM_G(R_update), std::bind(&NsfdEspWMS::handleUpdate, this));
-  server->on(WM_G(R_updatedone), HTTP_POST, std::bind(&NsfdEspWMS::handleUpdateDone, this), std::bind(&NsfdEspWMS::handleUpdating, this));
+  server->on(WM_G(R_update), std::bind(&HirobEspWMSEspWMS::handleUpdate, this));
+  server->on(WM_G(R_updatedone), HTTP_POST, std::bind(&HirobEspWMSEspWMS::handleUpdateDone, this), std::bind(&HirobEspWMSEspWMS::handleUpdating, this));
   
   server->begin(); // Web server start
   #ifdef WM_DEBUG_LEVEL
@@ -606,7 +606,7 @@ void NsfdEspWMS::setupHTTPServer(){
   #endif
 }
 
-void NsfdEspWMS::setupDNSD(){
+void HirobEspWMSEspWMS::setupDNSD(){
   dnsServer.reset(new DNSServer());
 
   /* Setup the DNS server redirecting all the domains to the apIP */
@@ -618,13 +618,13 @@ void NsfdEspWMS::setupDNSD(){
   dnsServer->start(DNS_PORT, F("*"), WiFi.softAPIP());
 }
 
-void NsfdEspWMS::setupConfigPortal() {
+void HirobEspWMSEspWMS::setupConfigPortal() {
   setupHTTPServer();
   _lastscan = 0; // reset network scan cache
   if(_preloadwifiscan) WiFi_scanNetworks(true,true); // preload wifiscan , async
 }
 
-boolean NsfdEspWMS::startConfigPortal() {
+boolean HirobEspWMSEspWMS::startConfigPortal() {
   String ssid = getDefaultAPName();
   return startConfigPortal(ssid.c_str(), NULL);
 }
@@ -636,7 +636,7 @@ boolean NsfdEspWMS::startConfigPortal() {
  * @param  {[type]} char const         *apPassword [description]
  * @return {[type]}      [description]
  */
-boolean  NsfdEspWMS::startConfigPortal(char const *apName, char const *apPassword) {
+boolean  HirobEspWMSEspWMS::startConfigPortal(char const *apName, char const *apPassword) {
   _begin();
 
   if(configPortalActive){
@@ -760,7 +760,7 @@ boolean  NsfdEspWMS::startConfigPortal(char const *apName, char const *apPasswor
  * @access public
  * @return bool connected
  */
-boolean NsfdEspWMS::process(){
+boolean HirobEspWMSEspWMS::process(){
     // process mdns, esp32 not required
     #if defined(WM_MDNS) && defined(ESP8266)
     MDNS.update();
@@ -788,7 +788,7 @@ boolean NsfdEspWMS::process(){
 }
 
 //using esp wl_status enums as returns for now, should be fine
-uint8_t NsfdEspWMS::processConfigPortal(){
+uint8_t HirobEspWMSEspWMS::processConfigPortal(){
     if(configPortalActive){
       //DNS handler
       dnsServer->processNextRequest();
@@ -880,7 +880,7 @@ uint8_t NsfdEspWMS::processConfigPortal(){
  * @access public
  * @return bool success (softapdisconnect)
  */
-bool NsfdEspWMS::shutdownConfigPortal(){
+bool HirobEspWMSEspWMS::shutdownConfigPortal(){
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(DEBUG_VERBOSE,F("shutdownConfigPortal"));
   #endif
@@ -940,7 +940,7 @@ bool NsfdEspWMS::shutdownConfigPortal(){
 // @todo refactor this up into seperate functions
 // one for connecting to flash , one for new client
 // clean up, flow is convoluted, and causes bugs
-uint8_t NsfdEspWMS::connectWifi(String ssid, String pass, bool connect) {
+uint8_t HirobEspWMSEspWMS::connectWifi(String ssid, String pass, bool connect) {
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(DEBUG_VERBOSE,F("Connecting as wifi client..."));
   #endif
@@ -1025,7 +1025,7 @@ uint8_t NsfdEspWMS::connectWifi(String ssid, String pass, bool connect) {
  * @return bool success
  * @return connect only save if false
  */
-bool NsfdEspWMS::wifiConnectNew(String ssid, String pass,bool connect){
+bool HirobEspWMSEspWMS::wifiConnectNew(String ssid, String pass,bool connect){
   bool ret = false;
   #ifdef WM_DEBUG_LEVEL
   // DEBUG_WM(DEBUG_DEV,F("CONNECTED: "),WiFi.status() == WL_CONNECTED ? "Y" : "NO");
@@ -1047,7 +1047,7 @@ bool NsfdEspWMS::wifiConnectNew(String ssid, String pass,bool connect){
  * @since dev
  * @return bool success
  */
-bool NsfdEspWMS::wifiConnectDefault(){
+bool HirobEspWMSEspWMS::wifiConnectDefault(){
   bool ret = false;
 
   #ifdef WM_DEBUG_LEVEL
@@ -1078,7 +1078,7 @@ bool NsfdEspWMS::wifiConnectDefault(){
  * @since $dev
  * @return bool success
  */
-bool NsfdEspWMS::setSTAConfig(){
+bool HirobEspWMSEspWMS::setSTAConfig(){
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(DEBUG_DEV,F("STA static IP:"),_sta_static_ip);  
   #endif
@@ -1114,7 +1114,7 @@ bool NsfdEspWMS::setSTAConfig(){
 }
 
 // @todo change to getLastFailureReason and do not touch conxresult
-void NsfdEspWMS::updateConxResult(uint8_t status){
+void HirobEspWMSEspWMS::updateConxResult(uint8_t status){
   // hack in wrong password detection
   _lastconxresult = status;
     #ifdef ESP8266
@@ -1139,7 +1139,7 @@ void NsfdEspWMS::updateConxResult(uint8_t status){
 }
 
  
-uint8_t NsfdEspWMS::waitForConnectResult() {
+uint8_t HirobEspWMSEspWMS::waitForConnectResult() {
   #ifdef WM_DEBUG_LEVEL
   if(_connectTimeout > 0) DEBUG_WM(DEBUG_DEV,_connectTimeout,F("ms connectTimeout set")); 
   #endif
@@ -1151,7 +1151,7 @@ uint8_t NsfdEspWMS::waitForConnectResult() {
  * @param  uint16_t timeout  in seconds
  * @return uint8_t  WL Status
  */
-uint8_t NsfdEspWMS::waitForConnectResult(uint32_t timeout) {
+uint8_t HirobEspWMSEspWMS::waitForConnectResult(uint32_t timeout) {
   if (timeout == 0){
     #ifdef WM_DEBUG_LEVEL
     DEBUG_WM(F("connectTimeout not set, ESP waitForConnectResult..."));
@@ -1181,7 +1181,7 @@ uint8_t NsfdEspWMS::waitForConnectResult(uint32_t timeout) {
 
 // WPS enabled? https://github.com/esp8266/Arduino/pull/4889
 #ifdef NO_EXTRA_4K_HEAP
-void NsfdEspWMS::startWPS() {
+void HirobEspWMSEspWMS::startWPS() {
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(F("START WPS"));
   #endif
@@ -1196,7 +1196,7 @@ void NsfdEspWMS::startWPS() {
 }
 #endif
 
-String NsfdEspWMS::getHTTPHead(String title){
+String HirobEspWMSEspWMS::getHTTPHead(String title){
   String page;
   page += FPSTR(HTTP_HEAD_START);
   page.replace(FPSTR(T_v), title);
@@ -1216,14 +1216,14 @@ String NsfdEspWMS::getHTTPHead(String title){
   return page;
 }
 
-void NsfdEspWMS::HTTPSend(String content){
+void HirobEspWMSEspWMS::HTTPSend(String content){
   server->send(200, FPSTR(HTTP_HEAD_CT), content);
 }
 
 /** 
  * HTTPD handler for page requests
  */
-void NsfdEspWMS::handleRequest() {
+void HirobEspWMSEspWMS::handleRequest() {
   _webPortalAccessed = millis();
 
   // TESTING HTTPD AUTH RFC 2617
@@ -1250,7 +1250,7 @@ void NsfdEspWMS::handleRequest() {
 /** 
  * HTTPD CALLBACK root or redirect to captive portal
  */
-void NsfdEspWMS::handleRoot() {
+void HirobEspWMSEspWMS::handleRoot() {
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(DEBUG_VERBOSE,F("<- HTTP Root"));
   #endif
@@ -1276,7 +1276,7 @@ void NsfdEspWMS::handleRoot() {
 /**
  * HTTPD CALLBACK Wifi config page handler
  */
-void NsfdEspWMS::handleWifi(boolean scan) {
+void HirobEspWMSEspWMS::handleWifi(boolean scan) {
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(DEBUG_VERBOSE,F("<- HTTP Wifi"));
   #endif
@@ -1332,7 +1332,7 @@ void NsfdEspWMS::handleWifi(boolean scan) {
 /**
  * HTTPD CALLBACK Wifi param page handler
  */
-void NsfdEspWMS::handleParam(){
+void HirobEspWMSEspWMS::handleParam(){
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(DEBUG_VERBOSE,F("<- HTTP Param"));
   #endif
@@ -1359,7 +1359,7 @@ void NsfdEspWMS::handleParam(){
 }
 
 
-String NsfdEspWMS::getMenuOut(){
+String HirobEspWMSEspWMS::getMenuOut(){
   String page;  
 
   for(auto menuId :_menuIds ){
@@ -1375,11 +1375,11 @@ String NsfdEspWMS::getMenuOut(){
 }
 
 // // is it possible in softap mode to detect aps without scanning
-// bool NsfdEspWMS::WiFi_scanNetworksForAP(bool force){
+// bool HirobEspWMSEspWMS::WiFi_scanNetworksForAP(bool force){
 //   WiFi_scanNetworks(force);
 // }
 
-void NsfdEspWMS::WiFi_scanComplete(int networksFound){
+void HirobEspWMSEspWMS::WiFi_scanComplete(int networksFound){
   _lastscan = millis();
   _numNetworks = networksFound;
   #ifdef WM_DEBUG_LEVEL
@@ -1388,17 +1388,17 @@ void NsfdEspWMS::WiFi_scanComplete(int networksFound){
   #endif
 }
 
-bool NsfdEspWMS::WiFi_scanNetworks(){
+bool HirobEspWMSEspWMS::WiFi_scanNetworks(){
   return WiFi_scanNetworks(false,false);
 }
  
-bool NsfdEspWMS::WiFi_scanNetworks(unsigned int cachetime,bool async){
+bool HirobEspWMSEspWMS::WiFi_scanNetworks(unsigned int cachetime,bool async){
     return WiFi_scanNetworks(millis()-_lastscan > cachetime,async);
 }
-bool NsfdEspWMS::WiFi_scanNetworks(unsigned int cachetime){
+bool HirobEspWMSEspWMS::WiFi_scanNetworks(unsigned int cachetime){
     return WiFi_scanNetworks(millis()-_lastscan > cachetime,false);
 }
-bool NsfdEspWMS::WiFi_scanNetworks(bool force,bool async){
+bool HirobEspWMSEspWMS::WiFi_scanNetworks(bool force,bool async){
     #ifdef WM_DEBUG_LEVEL
     // DEBUG_WM(DEBUG_DEV,"scanNetworks async:",async == true);
     // DEBUG_WM(DEBUG_DEV,_numNetworks,(millis()-_lastscan ));
@@ -1418,7 +1418,7 @@ bool NsfdEspWMS::WiFi_scanNetworks(bool force,bool async){
           DEBUG_WM(DEBUG_VERBOSE,F("WiFi Scan ASYNC started"));
           #endif
           using namespace std::placeholders; // for `_1`
-          WiFi.scanNetworksAsync(std::bind(&NsfdEspWMS::WiFi_scanComplete,this,_1));
+          WiFi.scanNetworksAsync(std::bind(&HirobEspWMSEspWMS::WiFi_scanComplete,this,_1));
           #else
           #ifdef WM_DEBUG_LEVEL
           DEBUG_WM(DEBUG_VERBOSE,F("WiFi Scan SYNC started"));
@@ -1471,7 +1471,7 @@ bool NsfdEspWMS::WiFi_scanNetworks(bool force,bool async){
     return false;
 }
 
-String NsfdEspWMS::NsfdEspWMS::getScanItemOut(){
+String HirobEspWMSEspWMS::HirobEspWMSEspWMS::getScanItemOut(){
     String page;
 
     if(!_numNetworks) WiFi_scanNetworks(); // scan in case this gets called before any scans
@@ -1591,7 +1591,7 @@ String NsfdEspWMS::NsfdEspWMS::getScanItemOut(){
     return page;
 }
 
-String NsfdEspWMS::getIpForm(String id, String title, String value){
+String HirobEspWMSEspWMS::getIpForm(String id, String title, String value){
     String item = FPSTR(HTTP_FORM_LABEL);
     item += FPSTR(HTTP_FORM_PARAM);
     item.replace(FPSTR(T_i), id);
@@ -1605,7 +1605,7 @@ String NsfdEspWMS::getIpForm(String id, String title, String value){
     return item;  
 }
 
-String NsfdEspWMS::getStaticOut(){
+String HirobEspWMSEspWMS::getStaticOut(){
   String page;
   if ((_staShowStaticFields || _sta_static_ip) && _staShowStaticFields>=0) {
     #ifdef WM_DEBUG_LEVEL
@@ -1630,7 +1630,7 @@ String NsfdEspWMS::getStaticOut(){
   return page;
 }
 
-String NsfdEspWMS::getParamOut(){
+String HirobEspWMSEspWMS::getParamOut(){
   String page;
 
   #ifdef WM_DEBUG_LEVEL
@@ -1657,7 +1657,7 @@ String NsfdEspWMS::getParamOut(){
       if (_params[i] == NULL || _params[i]->_length == 0 || _params[i]->_length > 99999) {
         // try to detect param scope issues, doesnt always catch but works ok
         #ifdef WM_DEBUG_LEVEL
-        DEBUG_WM(DEBUG_ERROR,F("[ERROR] NsfdEspWMSParameter is out of scope"));
+        DEBUG_WM(DEBUG_ERROR,F("[ERROR] HirobEspWMSEspWMSParameter is out of scope"));
         #endif
         return "";
       }
@@ -1706,7 +1706,7 @@ String NsfdEspWMS::getParamOut(){
   return page;
 }
 
-void NsfdEspWMS::handleWiFiStatus(){
+void HirobEspWMSEspWMS::handleWiFiStatus(){
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(DEBUG_VERBOSE,F("<- HTTP WiFi status "));
   #endif
@@ -1722,7 +1722,7 @@ void NsfdEspWMS::handleWiFiStatus(){
 /** 
  * HTTPD CALLBACK save form and redirect to WLAN config page again
  */
-void NsfdEspWMS::handleWifiSave() {
+void HirobEspWMSEspWMS::handleWifiSave() {
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(DEBUG_VERBOSE,F("<- HTTP WiFi save "));
   DEBUG_WM(DEBUG_DEV,F("Method:"),server->method() == HTTP_GET  ? (String)FPSTR(S_GET) : (String)FPSTR(S_POST));
@@ -1792,7 +1792,7 @@ void NsfdEspWMS::handleWifiSave() {
   connect = true; //signal ready to connect/reset process in processConfigPortal
 }
 
-void NsfdEspWMS::handleParamSave() {
+void HirobEspWMSEspWMS::handleParamSave() {
 
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(DEBUG_VERBOSE,F("<- HTTP Param save "));
@@ -1815,7 +1815,7 @@ void NsfdEspWMS::handleParamSave() {
   #endif
 }
 
-void NsfdEspWMS::doParamSave(){
+void HirobEspWMSEspWMS::doParamSave(){
    // @todo use new callback for before paramsaves, is this really needed?
   if ( _presavecallback != NULL) {
     _presavecallback();
@@ -1831,7 +1831,7 @@ void NsfdEspWMS::doParamSave(){
     for (int i = 0; i < _paramsCount; i++) {
       if (_params[i] == NULL || _params[i]->_length == 0) {
         #ifdef WM_DEBUG_LEVEL
-        DEBUG_WM(DEBUG_ERROR,F("[ERROR] NsfdEspWMSParameter is out of scope"));
+        DEBUG_WM(DEBUG_ERROR,F("[ERROR] HirobEspWMSEspWMSParameter is out of scope"));
         #endif
         break; // @todo might not be needed anymore
       }
@@ -1864,7 +1864,7 @@ void NsfdEspWMS::doParamSave(){
 /** 
  * HTTPD CALLBACK info page
  */
-void NsfdEspWMS::handleInfo() {
+void HirobEspWMSEspWMS::handleInfo() {
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(DEBUG_VERBOSE,F("<- HTTP Info"));
   #endif
@@ -1971,7 +1971,7 @@ void NsfdEspWMS::handleInfo() {
   #endif
 }
 
-String NsfdEspWMS::getInfoData(String id){
+String HirobEspWMSEspWMS::getInfoData(String id){
 
   String p;
   // @todo add WM versioning
@@ -2199,7 +2199,7 @@ String NsfdEspWMS::getInfoData(String id){
 /** 
  * HTTPD CALLBACK exit, closes configportal if blocking, if non blocking undefined
  */
-void NsfdEspWMS::handleExit() {
+void HirobEspWMSEspWMS::handleExit() {
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(DEBUG_VERBOSE,F("<- HTTP Exit"));
   #endif
@@ -2216,7 +2216,7 @@ void NsfdEspWMS::handleExit() {
 /** 
  * HTTPD CALLBACK reset page
  */
-void NsfdEspWMS::handleReset() {
+void HirobEspWMSEspWMS::handleReset() {
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(DEBUG_VERBOSE,F("<- HTTP Reset"));
   #endif
@@ -2238,10 +2238,10 @@ void NsfdEspWMS::handleReset() {
  * HTTPD CALLBACK erase page
  */
 
-// void NsfdEspWMS::handleErase() {
+// void HirobEspWMSEspWMS::handleErase() {
 //   handleErase(false);
 // }
-void NsfdEspWMS::handleErase(boolean opt) {
+void HirobEspWMSEspWMS::handleErase(boolean opt) {
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(DEBUG_NOTIFY,F("<- HTTP Erase"));
   #endif
@@ -2273,7 +2273,7 @@ void NsfdEspWMS::handleErase(boolean opt) {
 /** 
  * HTTPD CALLBACK 404
  */
-void NsfdEspWMS::handleNotFound() {
+void HirobEspWMSEspWMS::handleNotFound() {
   if (captivePortal()) return; // If captive portal redirect instead of displaying the page
   handleRequest();
   String message = FPSTR(S_notfound); // @token notfound
@@ -2299,7 +2299,7 @@ void NsfdEspWMS::handleNotFound() {
  * Redirect to captive portal if we got a request for another domain. 
  * Return true in that case so the page handler do not try to handle the request again. 
  */
-boolean NsfdEspWMS::captivePortal() {
+boolean HirobEspWMSEspWMS::captivePortal() {
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(DEBUG_DEV,"-> " + server->hostHeader());
   #endif
@@ -2323,13 +2323,13 @@ boolean NsfdEspWMS::captivePortal() {
   return false;
 }
 
-void NsfdEspWMS::stopCaptivePortal(){
+void HirobEspWMSEspWMS::stopCaptivePortal(){
   _enableCaptivePortal= false;
   // @todo maybe disable configportaltimeout(optional), or just provide callback for user
 }
 
 // HTTPD CALLBACK, handle close,  stop captive portal, if not enabled undefined
-void NsfdEspWMS::handleClose(){
+void HirobEspWMSEspWMS::handleClose(){
   DEBUG_WM(DEBUG_VERBOSE,F("Disabling Captive Portal"));
   stopCaptivePortal();
   #ifdef WM_DEBUG_LEVEL
@@ -2341,7 +2341,7 @@ void NsfdEspWMS::handleClose(){
   HTTPSend(page);
 }
 
-void NsfdEspWMS::reportStatus(String &page){
+void HirobEspWMSEspWMS::reportStatus(String &page){
   // updateConxResult(WiFi.status()); // @todo: this defeats the purpose of last result, update elsewhere or add logic here
   DEBUG_WM(DEBUG_DEV,F("[WIFI] reportStatus prev:"),getWLStatusString(_lastconxresult));
   DEBUG_WM(DEBUG_DEV,F("[WIFI] reportStatus current:"),getWLStatusString(WiFi.status()));
@@ -2394,7 +2394,7 @@ void NsfdEspWMS::reportStatus(String &page){
  * [stopConfigPortal description]
  * @return {[type]} [description]
  */
-bool NsfdEspWMS::stopConfigPortal(){
+bool HirobEspWMSEspWMS::stopConfigPortal(){
   if(_configPortalIsBlocking){
     abort = true;
     return true;
@@ -2408,7 +2408,7 @@ bool NsfdEspWMS::stopConfigPortal(){
  * @since $dev
  * @return bool success
  */
-bool NsfdEspWMS::disconnect(){
+bool HirobEspWMSEspWMS::disconnect(){
   if(WiFi.status() != WL_CONNECTED){
     #ifdef WM_DEBUG_LEVEL
     DEBUG_WM(DEBUG_VERBOSE,F("Disconnecting: Not connected"));
@@ -2425,7 +2425,7 @@ bool NsfdEspWMS::disconnect(){
  * reboot the device
  * @access public
  */
-void NsfdEspWMS::reboot(){
+void HirobEspWMSEspWMS::reboot(){
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(F("Restarting"));
   #endif
@@ -2436,11 +2436,11 @@ void NsfdEspWMS::reboot(){
  * reboot the device
  * @access public
  */
-bool NsfdEspWMS::erase(){
+bool HirobEspWMSEspWMS::erase(){
   return erase(false);
 }
 
-bool NsfdEspWMS::erase(bool opt){
+bool HirobEspWMSEspWMS::erase(bool opt){
   #ifdef WM_DEBUG_LEVEL
   DEBUG_WM("Erasing");
   #endif
@@ -2495,7 +2495,7 @@ bool NsfdEspWMS::erase(bool opt){
  * ERASES STA CREDENTIALS
  * @access public
  */
-void NsfdEspWMS::resetSettings() {
+void HirobEspWMSEspWMS::resetSettings() {
 #ifdef WM_DEBUG_LEVEL
   DEBUG_WM(F("resetSettings"));
   #endif
@@ -2524,7 +2524,7 @@ void NsfdEspWMS::resetSettings() {
  * @access public
  * @param {[type]} unsigned long seconds [description]
  */
-void NsfdEspWMS::setTimeout(unsigned long seconds) {
+void HirobEspWMSEspWMS::setTimeout(unsigned long seconds) {
   setConfigPortalTimeout(seconds);
 }
 
@@ -2533,7 +2533,7 @@ void NsfdEspWMS::setTimeout(unsigned long seconds) {
  * @access public
  * @param {[type]} unsigned long seconds [description]
  */
-void NsfdEspWMS::setConfigPortalTimeout(unsigned long seconds) {
+void HirobEspWMSEspWMS::setConfigPortalTimeout(unsigned long seconds) {
   _configPortalTimeout = seconds * 1000;
 }
 
@@ -2542,7 +2542,7 @@ void NsfdEspWMS::setConfigPortalTimeout(unsigned long seconds) {
  * @access public
  * @param {[type]} unsigned long seconds [description]
  */
-void NsfdEspWMS::setConnectTimeout(unsigned long seconds) {
+void HirobEspWMSEspWMS::setConnectTimeout(unsigned long seconds) {
   _connectTimeout = seconds * 1000;
 }
 
@@ -2551,7 +2551,7 @@ void NsfdEspWMS::setConnectTimeout(unsigned long seconds) {
  * @access public
  * @param {[type]} uint8_t numRetries [description]
  */
-void NsfdEspWMS::setConnectRetries(uint8_t numRetries){
+void HirobEspWMSEspWMS::setConnectRetries(uint8_t numRetries){
   _connectRetries = constrain(numRetries,1,10);
 }
 
@@ -2559,7 +2559,7 @@ void NsfdEspWMS::setConnectRetries(uint8_t numRetries){
  * toggle _cleanconnect, always disconnect before connecting
  * @param {[type]} bool enable [description]
  */
-void NsfdEspWMS::setCleanConnect(bool enable){
+void HirobEspWMSEspWMS::setCleanConnect(bool enable){
   _cleanConnect = enable;
 }
 
@@ -2568,7 +2568,7 @@ void NsfdEspWMS::setCleanConnect(bool enable){
  * @access public
  * @param {[type]} unsigned long seconds [description]
  */
-void NsfdEspWMS::setSaveConnectTimeout(unsigned long seconds) {
+void HirobEspWMSEspWMS::setSaveConnectTimeout(unsigned long seconds) {
   _saveTimeout = seconds * 1000;
 }
 
@@ -2578,7 +2578,7 @@ void NsfdEspWMS::setSaveConnectTimeout(unsigned long seconds) {
  * @access public
  * @param {[type]} bool connect [description]
  */
-void NsfdEspWMS::setSaveConnect(bool connect) {
+void HirobEspWMSEspWMS::setSaveConnect(bool connect) {
   _connectonsave = connect;
 }
 
@@ -2587,12 +2587,12 @@ void NsfdEspWMS::setSaveConnect(bool connect) {
  * @access public
  * @param {[type]} boolean debug [description]
  */
-void NsfdEspWMS::setDebugOutput(boolean debug) {
+void HirobEspWMSEspWMS::setDebugOutput(boolean debug) {
   _debug = debug;
   if(_debug && _debugLevel == DEBUG_DEV) debugPlatformInfo();
 }
 
-void NsfdEspWMS::setDebugOutput(boolean debug, String prefix) {
+void HirobEspWMSEspWMS::setDebugOutput(boolean debug, String prefix) {
   _debugPrefix = prefix;
   setDebugOutput(debug);
 }
@@ -2604,7 +2604,7 @@ void NsfdEspWMS::setDebugOutput(boolean debug, String prefix) {
  * @param {[type]} IPAddress gw [description]
  * @param {[type]} IPAddress sn [description]
  */
-void NsfdEspWMS::setAPStaticIPConfig(IPAddress ip, IPAddress gw, IPAddress sn) {
+void HirobEspWMSEspWMS::setAPStaticIPConfig(IPAddress ip, IPAddress gw, IPAddress sn) {
   _ap_static_ip = ip;
   _ap_static_gw = gw;
   _ap_static_sn = sn;
@@ -2617,7 +2617,7 @@ void NsfdEspWMS::setAPStaticIPConfig(IPAddress ip, IPAddress gw, IPAddress sn) {
  * @param {[type]} IPAddress gw [description]
  * @param {[type]} IPAddress sn [description]
  */
-void NsfdEspWMS::setSTAStaticIPConfig(IPAddress ip, IPAddress gw, IPAddress sn) {
+void HirobEspWMSEspWMS::setSTAStaticIPConfig(IPAddress ip, IPAddress gw, IPAddress sn) {
   _sta_static_ip = ip;
   _sta_static_gw = gw;
   _sta_static_sn = sn;
@@ -2632,7 +2632,7 @@ void NsfdEspWMS::setSTAStaticIPConfig(IPAddress ip, IPAddress gw, IPAddress sn) 
  * @param {[type]} IPAddress sn [description]
  * @param {[type]} IPAddress dns [description]
  */
-void NsfdEspWMS::setSTAStaticIPConfig(IPAddress ip, IPAddress gw, IPAddress sn, IPAddress dns) {
+void HirobEspWMSEspWMS::setSTAStaticIPConfig(IPAddress ip, IPAddress gw, IPAddress sn, IPAddress dns) {
   setSTAStaticIPConfig(ip,gw,sn);
   _sta_static_dns = dns;
 }
@@ -2642,7 +2642,7 @@ void NsfdEspWMS::setSTAStaticIPConfig(IPAddress ip, IPAddress gw, IPAddress sn, 
  * @access public
  * @param {[type]} int quality [description]
  */
-void NsfdEspWMS::setMinimumSignalQuality(int quality) {
+void HirobEspWMSEspWMS::setMinimumSignalQuality(int quality) {
   _minimumQuality = quality;
 }
 
@@ -2651,16 +2651,16 @@ void NsfdEspWMS::setMinimumSignalQuality(int quality) {
  * @access public
  * @param {[type]} boolean shouldBreak [description]
  */
-void NsfdEspWMS::setBreakAfterConfig(boolean shouldBreak) {
+void HirobEspWMSEspWMS::setBreakAfterConfig(boolean shouldBreak) {
   _shouldBreakAfterConfig = shouldBreak;
 }
 
 /**
  * setAPCallback, set a callback when softap is started
  * @access public 
- * @param {[type]} void (*func)(NsfdEspWMS* wminstance)
+ * @param {[type]} void (*func)(HirobEspWMSEspWMS* wminstance)
  */
-void NsfdEspWMS::setAPCallback( std::function<void(NsfdEspWMS*)> func ) {
+void HirobEspWMSEspWMS::setAPCallback( std::function<void(HirobEspWMSEspWMS*)> func ) {
   _apcallback = func;
 }
 
@@ -2671,7 +2671,7 @@ void NsfdEspWMS::setAPCallback( std::function<void(NsfdEspWMS*)> func ) {
  * @access public 
  * @param {[type]} void (*func)(void)
  */
-void NsfdEspWMS::setWebServerCallback( std::function<void()> func ) {
+void HirobEspWMSEspWMS::setWebServerCallback( std::function<void()> func ) {
   _webservercallback = func;
 }
 
@@ -2681,7 +2681,7 @@ void NsfdEspWMS::setWebServerCallback( std::function<void()> func ) {
  * @access public
  * @param {[type]} void (*func)(void)
  */
-void NsfdEspWMS::setSaveConfigCallback( std::function<void()> func ) {
+void HirobEspWMSEspWMS::setSaveConfigCallback( std::function<void()> func ) {
   _savewificallback = func;
 }
 
@@ -2690,7 +2690,7 @@ void NsfdEspWMS::setSaveConfigCallback( std::function<void()> func ) {
  * @access public
  * @param {[type]} void(*func)(void)
  */
-void NsfdEspWMS::setConfigResetCallback( std::function<void()> func ) {
+void HirobEspWMSEspWMS::setConfigResetCallback( std::function<void()> func ) {
     _resetcallback = func;
 }
 
@@ -2699,7 +2699,7 @@ void NsfdEspWMS::setConfigResetCallback( std::function<void()> func ) {
  * @access public
  * @param {[type]} void (*func)(void)
  */
-void NsfdEspWMS::setSaveParamsCallback( std::function<void()> func ) {
+void HirobEspWMSEspWMS::setSaveParamsCallback( std::function<void()> func ) {
   _saveparamscallback = func;
 }
 
@@ -2708,7 +2708,7 @@ void NsfdEspWMS::setSaveParamsCallback( std::function<void()> func ) {
  * @access public
  * @param {[type]} void (*func)(void)
  */
-void NsfdEspWMS::setPreSaveConfigCallback( std::function<void()> func ) {
+void HirobEspWMSEspWMS::setPreSaveConfigCallback( std::function<void()> func ) {
   _presavecallback = func;
 }
 
@@ -2717,7 +2717,7 @@ void NsfdEspWMS::setPreSaveConfigCallback( std::function<void()> func ) {
  * @access public
  * @param {[type]} void (*func)(void)
  */
-void NsfdEspWMS::setPreOtaUpdateCallback( std::function<void()> func ) {
+void HirobEspWMSEspWMS::setPreOtaUpdateCallback( std::function<void()> func ) {
   _preotaupdatecallback = func;
 }
 
@@ -2727,7 +2727,7 @@ void NsfdEspWMS::setPreOtaUpdateCallback( std::function<void()> func ) {
  * @access public
  * @param char element
  */
-void NsfdEspWMS::setCustomHeadElement(const char* html) {
+void HirobEspWMSEspWMS::setCustomHeadElement(const char* html) {
   _customHeadElement = html;
 }
 
@@ -2737,7 +2737,7 @@ void NsfdEspWMS::setCustomHeadElement(const char* html) {
  * @access public
  * @param char element
  */
-void NsfdEspWMS::setCustomMenuHTML(const char* html) {
+void HirobEspWMSEspWMS::setCustomMenuHTML(const char* html) {
   _customMenuHTML = html;
 }
 
@@ -2747,7 +2747,7 @@ void NsfdEspWMS::setCustomMenuHTML(const char* html) {
  * @access public
  * @param boolean removeDuplicates [true]
  */
-void NsfdEspWMS::setRemoveDuplicateAPs(boolean removeDuplicates) {
+void HirobEspWMSEspWMS::setRemoveDuplicateAPs(boolean removeDuplicates) {
   _removeDuplicateAPs = removeDuplicates;
 }
 
@@ -2759,7 +2759,7 @@ void NsfdEspWMS::setRemoveDuplicateAPs(boolean removeDuplicates) {
  * @access public
  * @param boolean shoudlBlock [false]
  */
-void NsfdEspWMS::setConfigPortalBlocking(boolean shouldBlock) {
+void HirobEspWMSEspWMS::setConfigPortalBlocking(boolean shouldBlock) {
   _configPortalIsBlocking = shouldBlock;
 }
 
@@ -2771,7 +2771,7 @@ void NsfdEspWMS::setConfigPortalBlocking(boolean shouldBlock) {
  * @access public
  * @param boolean persistent [true]
  */
-void NsfdEspWMS::setRestorePersistent(boolean persistent) {
+void HirobEspWMSEspWMS::setRestorePersistent(boolean persistent) {
   _userpersistent = persistent;
   if(!persistent){
     #ifdef WM_DEBUG_LEVEL
@@ -2787,7 +2787,7 @@ void NsfdEspWMS::setRestorePersistent(boolean persistent) {
  * @access public
  * @param boolean alwaysShow [false]
  */
-void NsfdEspWMS::setShowStaticFields(boolean alwaysShow){
+void HirobEspWMSEspWMS::setShowStaticFields(boolean alwaysShow){
   if(_disableIpFields) _staShowStaticFields = alwaysShow ? 1 : -1;
   else _staShowStaticFields = alwaysShow ? 1 : 0;
 }
@@ -2799,7 +2799,7 @@ void NsfdEspWMS::setShowStaticFields(boolean alwaysShow){
  * @access public
  * @param boolean alwaysShow [false]
  */
-void NsfdEspWMS::setShowDnsFields(boolean alwaysShow){
+void HirobEspWMSEspWMS::setShowDnsFields(boolean alwaysShow){
   if(_disableIpFields) _staShowDns = alwaysShow ? 1 : -1;
   _staShowDns = alwaysShow ? 1 : 0;
 }
@@ -2811,7 +2811,7 @@ void NsfdEspWMS::setShowDnsFields(boolean alwaysShow){
  * @access public
  * @param boolean alwaysShow [false]
  */
-void NsfdEspWMS::setShowPassword(boolean show){
+void HirobEspWMSEspWMS::setShowPassword(boolean show){
   _showPassword = show;
 }
 
@@ -2823,7 +2823,7 @@ void NsfdEspWMS::setShowPassword(boolean show){
  * @access public
  * @param boolean enabled [true]
  */
-void NsfdEspWMS::setCaptivePortalEnable(boolean enabled){
+void HirobEspWMSEspWMS::setCaptivePortalEnable(boolean enabled){
   _enableCaptivePortal = enabled;
 }
 
@@ -2836,7 +2836,7 @@ void NsfdEspWMS::setCaptivePortalEnable(boolean enabled){
  * @access public
  * @param boolean enabled [true]
  */
-void NsfdEspWMS::setWiFiAutoReconnect(boolean enabled){
+void HirobEspWMSEspWMS::setWiFiAutoReconnect(boolean enabled){
   _wifiAutoReconnect = enabled;
 }
 
@@ -2848,7 +2848,7 @@ void NsfdEspWMS::setWiFiAutoReconnect(boolean enabled){
  * @access public
  * @param boolean enabled [false]
  */
-void NsfdEspWMS::setAPClientCheck(boolean enabled){
+void HirobEspWMSEspWMS::setAPClientCheck(boolean enabled){
   _apClientCheck = enabled;
 }
 
@@ -2859,7 +2859,7 @@ void NsfdEspWMS::setAPClientCheck(boolean enabled){
  * @access public
  * @param boolean enabled [true]
  */
-void NsfdEspWMS::setWebPortalClientCheck(boolean enabled){
+void HirobEspWMSEspWMS::setWebPortalClientCheck(boolean enabled){
   _webClientCheck = enabled;
 }
 
@@ -2869,7 +2869,7 @@ void NsfdEspWMS::setWebPortalClientCheck(boolean enabled){
  * @access public
  * @param boolean enabled [false]
  */
-void NsfdEspWMS::setScanDispPerc(boolean enabled){
+void HirobEspWMSEspWMS::setScanDispPerc(boolean enabled){
   _scanDispOptions = enabled;
 }
 
@@ -2880,7 +2880,7 @@ void NsfdEspWMS::setScanDispPerc(boolean enabled){
  * @access public
  * @param boolean enabled [true]
  */
-void NsfdEspWMS::setEnableConfigPortal(boolean enable)
+void HirobEspWMSEspWMS::setEnableConfigPortal(boolean enable)
 {
     _enableConfigPortal = enable;
 }
@@ -2892,7 +2892,7 @@ void NsfdEspWMS::setEnableConfigPortal(boolean enable)
  * @access public
  * @param boolean enabled [true]
  */
-void NsfdEspWMS::setDisableConfigPortal(boolean enable)
+void HirobEspWMSEspWMS::setDisableConfigPortal(boolean enable)
 {
     _disableConfigPortal = enable;
 }
@@ -2904,13 +2904,13 @@ void NsfdEspWMS::setDisableConfigPortal(boolean enable)
  * @param  char* hostname 32 character hostname to use for sta+ap in esp32, sta in esp8266
  * @return bool false if hostname is not valid
  */
-bool  NsfdEspWMS::setHostname(const char * hostname){
+bool  HirobEspWMSEspWMS::setHostname(const char * hostname){
   //@todo max length 32
   _hostname = String(hostname);
   return true;
 }
 
-bool  NsfdEspWMS::setHostname(String hostname){
+bool  HirobEspWMSEspWMS::setHostname(String hostname){
   //@todo max length 32
   _hostname = hostname;
   return true;
@@ -2920,7 +2920,7 @@ bool  NsfdEspWMS::setHostname(String hostname){
  * set the soft ao channel, ignored if channelsync is true and connected
  * @param int32_t   wifi channel, 0 to disable
  */
-void NsfdEspWMS::setWiFiAPChannel(int32_t channel){
+void HirobEspWMSEspWMS::setWiFiAPChannel(int32_t channel){
   _apChannel = channel;
 }
 
@@ -2928,7 +2928,7 @@ void NsfdEspWMS::setWiFiAPChannel(int32_t channel){
  * set the soft ap hidden
  * @param bool   wifi ap hidden, default is false
  */
-void NsfdEspWMS::setWiFiAPHidden(bool hidden){
+void HirobEspWMSEspWMS::setWiFiAPHidden(bool hidden){
   _apHidden = hidden;
 }
 
@@ -2937,7 +2937,7 @@ void NsfdEspWMS::setWiFiAPHidden(bool hidden){
  * toggle showing erase wifi config button on info page
  * @param boolean enabled
  */
-void NsfdEspWMS::setShowInfoErase(boolean enabled){
+void HirobEspWMSEspWMS::setShowInfoErase(boolean enabled){
   _showInfoErase = enabled;
 }
 
@@ -2945,7 +2945,7 @@ void NsfdEspWMS::setShowInfoErase(boolean enabled){
  * toggle showing update upload web ota button on info page
  * @param boolean enabled
  */
-void NsfdEspWMS::setShowInfoUpdate(boolean enabled){
+void HirobEspWMSEspWMS::setShowInfoUpdate(boolean enabled){
   _showInfoUpdate = enabled;
 }
 
@@ -2953,7 +2953,7 @@ void NsfdEspWMS::setShowInfoUpdate(boolean enabled){
  * check if the config portal is running
  * @return bool true if active
  */
-bool NsfdEspWMS::getConfigPortalActive(){
+bool HirobEspWMSEspWMS::getConfigPortalActive(){
   return configPortalActive;
 }
 
@@ -2961,12 +2961,12 @@ bool NsfdEspWMS::getConfigPortalActive(){
  * [getConfigPortalActive description]
  * @return bool true if active
  */
-bool NsfdEspWMS::getWebPortalActive(){
+bool HirobEspWMSEspWMS::getWebPortalActive(){
   return webPortalActive;
 }
 
 
-String NsfdEspWMS::getWiFiHostname(){
+String HirobEspWMSEspWMS::getWiFiHostname(){
   #ifdef ESP32
     return (String)WiFi.getHostname();
   #else
@@ -2978,7 +2978,7 @@ String NsfdEspWMS::getWiFiHostname(){
  * [setTitle description]
  * @param String title, set app title
  */
-void NsfdEspWMS::setTitle(String title){
+void HirobEspWMSEspWMS::setTitle(String title){
   _title = title;
 }
 
@@ -2987,11 +2987,11 @@ void NsfdEspWMS::setTitle(String title){
  * if param is present in menu , params will be removed from wifi page automatically
  * eg.
  *  const char * menu[] = {"wifi","setup","sep","info","exit"};
- *  NsfdEspWMS.setMenu(menu);
+ *  HirobEspWMSEspWMS.setMenu(menu);
  * @since $dev
  * @param uint8_t menu[] array of menu ids
  */
-void NsfdEspWMS::setMenu(const char * menu[], uint8_t size){
+void HirobEspWMSEspWMS::setMenu(const char * menu[], uint8_t size){
 #ifdef WM_DEBUG_LEVEL
   // DEBUG_WM(DEBUG_DEV,"setmenu array");
   #endif
@@ -3013,12 +3013,12 @@ void NsfdEspWMS::setMenu(const char * menu[], uint8_t size){
  * setMenu with vector
  * eg.
  * std::vector<const char *> menu = {"wifi","setup","sep","info","exit"};
- * NsfdEspWMS.setMenu(menu);
+ * HirobEspWMSEspWMS.setMenu(menu);
  * tokens can be found in _menutokens array in strings_tr.h
  * @shiftIncrement $dev
  * @param {[type]} std::vector<const char *>& menu [description]
  */
-void NsfdEspWMS::setMenu(std::vector<const char *>& menu){
+void HirobEspWMSEspWMS::setMenu(std::vector<const char *>& menu){
 #ifdef WM_DEBUG_LEVEL
   // DEBUG_WM(DEBUG_DEV,"setmenu vector");
   #endif
@@ -3044,7 +3044,7 @@ void NsfdEspWMS::setMenu(std::vector<const char *>& menu){
  * @param bool enable 
  * @since $dev
  */
-void NsfdEspWMS::setParamsPage(bool enable){
+void HirobEspWMSEspWMS::setParamsPage(bool enable){
   _paramsInWifi  = !enable;
   setMenu(enable ? _menuIdsParams : _menuIdsDefault);
 }
@@ -3057,7 +3057,7 @@ void NsfdEspWMS::setParamsPage(bool enable){
  * @access public
  * @return String the configportal ap name
  */
-String NsfdEspWMS::getConfigPortalSSID() {
+String HirobEspWMSEspWMS::getConfigPortalSSID() {
   return _apName;
 }
 
@@ -3069,7 +3069,7 @@ String NsfdEspWMS::getConfigPortalSSID() {
  * @access public
  * @return bool return wl_status codes
  */
-uint8_t NsfdEspWMS::getLastConxResult(){
+uint8_t HirobEspWMSEspWMS::getLastConxResult(){
   return _lastconxresult;
 }
 
@@ -3079,7 +3079,7 @@ uint8_t NsfdEspWMS::getLastConxResult(){
  * @access public
  * @return bool true if a saved ap config exists
  */
-bool NsfdEspWMS::getWiFiIsSaved(){
+bool HirobEspWMSEspWMS::getWiFiIsSaved(){
   return WiFi_hasAutoConnect();
 }
 
@@ -3088,7 +3088,7 @@ bool NsfdEspWMS::getWiFiIsSaved(){
  * @since $dev
  * @return string 
  */
-String NsfdEspWMS::getDefaultAPName(){
+String HirobEspWMSEspWMS::getDefaultAPName(){
   String hostString = String(WIFI_getChipId(),HEX);
   hostString.toUpperCase();
   // char hostString[16] = {0};
@@ -3101,7 +3101,7 @@ String NsfdEspWMS::getDefaultAPName(){
  * @since $dev
  * @param String cc country code, must be defined in WiFiSetCountry, US, JP, CN
  */
-void NsfdEspWMS::setCountry(String cc){
+void HirobEspWMSEspWMS::setCountry(String cc){
   _wificountry = cc;
 }
 
@@ -3109,7 +3109,7 @@ void NsfdEspWMS::setCountry(String cc){
  * setClass
  * @param String str body class string
  */
-void NsfdEspWMS::setClass(String str){
+void HirobEspWMSEspWMS::setClass(String str){
   _bodyClass = str;
 }
 
@@ -3117,7 +3117,7 @@ void NsfdEspWMS::setClass(String str){
  * setDarkMode
  * @param bool enable, enable dark mode via invert class
  */
-void NsfdEspWMS::setDarkMode(bool enable){
+void HirobEspWMSEspWMS::setDarkMode(bool enable){
   _bodyClass = enable ? "invert" : "";
 }
 
@@ -3125,12 +3125,12 @@ void NsfdEspWMS::setDarkMode(bool enable){
  * setHttpPort
  * @param uint16_t port webserver port number default 80
  */
-void NsfdEspWMS::setHttpPort(uint16_t port){
+void HirobEspWMSEspWMS::setHttpPort(uint16_t port){
   _httpPort = port;
 }
 
 
-bool NsfdEspWMS::preloadWiFi(String ssid, String pass){
+bool HirobEspWMSEspWMS::preloadWiFi(String ssid, String pass){
   _defaultssid = ssid;
   _defaultpass = pass;
   return true;
@@ -3144,7 +3144,7 @@ bool NsfdEspWMS::preloadWiFi(String ssid, String pass){
  * @param bool persistent
  * @return String
  */
-String NsfdEspWMS::getWiFiSSID(bool persistent){
+String HirobEspWMSEspWMS::getWiFiSSID(bool persistent){
   return WiFi_SSID(persistent);
 }
 
@@ -3154,29 +3154,29 @@ String NsfdEspWMS::getWiFiSSID(bool persistent){
  * @param bool persistent
  * @return String
  */
-String NsfdEspWMS::getWiFiPass(bool persistent){
+String HirobEspWMSEspWMS::getWiFiPass(bool persistent){
   return WiFi_psk(persistent);
 } 
 
 // DEBUG
 // @todo fix DEBUG_WM(0,0);
 template <typename Generic>
-void NsfdEspWMS::DEBUG_WM(Generic text) {
+void HirobEspWMSEspWMS::DEBUG_WM(Generic text) {
   DEBUG_WM(DEBUG_NOTIFY,text,"");
 }
 
 template <typename Generic>
-void NsfdEspWMS::DEBUG_WM(wm_debuglevel_t level,Generic text) {
+void HirobEspWMSEspWMS::DEBUG_WM(wm_debuglevel_t level,Generic text) {
   if(_debugLevel >= level) DEBUG_WM(level,text,"");
 }
 
 template <typename Generic, typename Genericb>
-void NsfdEspWMS::DEBUG_WM(Generic text,Genericb textb) {
+void HirobEspWMSEspWMS::DEBUG_WM(Generic text,Genericb textb) {
   DEBUG_WM(DEBUG_NOTIFY,text,textb);
 }
 
 template <typename Generic, typename Genericb>
-void NsfdEspWMS::DEBUG_WM(wm_debuglevel_t level,Generic text,Genericb textb) {
+void HirobEspWMSEspWMS::DEBUG_WM(wm_debuglevel_t level,Generic text,Genericb textb) {
   if(!_debug || _debugLevel < level) return;
 
   if(_debugLevel >= DEBUG_MAX){
@@ -3217,7 +3217,7 @@ void NsfdEspWMS::DEBUG_WM(wm_debuglevel_t level,Generic text,Genericb textb) {
  * @access public
  * @return {[type]} [description]
  */
-void NsfdEspWMS::debugSoftAPConfig(){
+void HirobEspWMSEspWMS::debugSoftAPConfig(){
     
     #ifdef ESP8266
       softap_config config;
@@ -3259,7 +3259,7 @@ void NsfdEspWMS::debugSoftAPConfig(){
  * @access public
  * @return {[type]} [description]
  */
-void NsfdEspWMS::debugPlatformInfo(){
+void HirobEspWMSEspWMS::debugPlatformInfo(){
   #ifdef ESP8266
     system_print_meminfo();
     #ifdef WM_DEBUG_LEVEL
@@ -3286,7 +3286,7 @@ void NsfdEspWMS::debugPlatformInfo(){
   #endif
 }
 
-int NsfdEspWMS::getRSSIasQuality(int RSSI) {
+int HirobEspWMSEspWMS::getRSSIasQuality(int RSSI) {
   int quality = 0;
 
   if (RSSI <= -100) {
@@ -3300,7 +3300,7 @@ int NsfdEspWMS::getRSSIasQuality(int RSSI) {
 }
 
 /** Is this an IP? */
-boolean NsfdEspWMS::isIp(String str) {
+boolean HirobEspWMSEspWMS::isIp(String str) {
   for (size_t i = 0; i < str.length(); i++) {
     int c = str.charAt(i);
     if (c != '.' && (c < '0' || c > '9')) {
@@ -3311,7 +3311,7 @@ boolean NsfdEspWMS::isIp(String str) {
 }
 
 /** IP to String? */
-String NsfdEspWMS::toStringIp(IPAddress ip) {
+String HirobEspWMSEspWMS::toStringIp(IPAddress ip) {
   String res = "";
   for (int i = 0; i < 3; i++) {
     res += String((ip >> (8 * i)) & 0xFF) + ".";
@@ -3320,7 +3320,7 @@ String NsfdEspWMS::toStringIp(IPAddress ip) {
   return res;
 }
 
-boolean NsfdEspWMS::validApPassword(){
+boolean HirobEspWMSEspWMS::validApPassword(){
   // check that ap password is valid, return false
   if (_apPassword == NULL) _apPassword = "";
   if (_apPassword != "") {
@@ -3345,7 +3345,7 @@ boolean NsfdEspWMS::validApPassword(){
  * @param  string str  string to replace entities
  * @return string      encoded string
  */
-String NsfdEspWMS::htmlEntities(String str, bool whitespace) {
+String HirobEspWMSEspWMS::htmlEntities(String str, bool whitespace) {
   str.replace("&","&amp;");
   str.replace("<","&lt;");
   str.replace(">","&gt;");
@@ -3365,30 +3365,30 @@ return str;
  * @param  {[type]} uint8_t status        [description]
  * @return {[type]}         [description]
  */
-String NsfdEspWMS::getWLStatusString(uint8_t status){
+String HirobEspWMSEspWMS::getWLStatusString(uint8_t status){
   if(status <= 7) return WIFI_STA_STATUS[status];
   return FPSTR(S_NA);
 }
 
-String NsfdEspWMS::getWLStatusString(){
+String HirobEspWMSEspWMS::getWLStatusString(){
   uint8_t status = WiFi.status();
   if(status <= 7) return WIFI_STA_STATUS[status];
   return FPSTR(S_NA);
 }
 
-String NsfdEspWMS::encryptionTypeStr(uint8_t authmode) {
+String HirobEspWMSEspWMS::encryptionTypeStr(uint8_t authmode) {
 #ifdef WM_DEBUG_LEVEL
   // DEBUG_WM("enc_tye: ",authmode);
   #endif
   return AUTH_MODE_NAMES[authmode];
 }
 
-String NsfdEspWMS::getModeString(uint8_t mode){
+String HirobEspWMSEspWMS::getModeString(uint8_t mode){
   if(mode <= 3) return WIFI_MODES[mode];
   return FPSTR(S_NA);
 }
 
-bool NsfdEspWMS::WiFiSetCountry(){
+bool HirobEspWMSEspWMS::WiFiSetCountry(){
   if(_wificountry == "") return false; // skip not set
 
   #ifdef WM_DEBUG_LEVEL
@@ -3446,7 +3446,7 @@ bool NsfdEspWMS::WiFiSetCountry(){
 }
 
 // set mode ignores WiFi.persistent 
-bool NsfdEspWMS::WiFi_Mode(WiFiMode_t m,bool persistent) {
+bool HirobEspWMSEspWMS::WiFi_Mode(WiFiMode_t m,bool persistent) {
     bool ret;
     #ifdef ESP8266
       if((wifi_get_opmode() == (uint8) m ) && !persistent) {
@@ -3464,12 +3464,12 @@ bool NsfdEspWMS::WiFi_Mode(WiFiMode_t m,bool persistent) {
       return ret;
     #endif
 }
-bool NsfdEspWMS::WiFi_Mode(WiFiMode_t m) {
+bool HirobEspWMSEspWMS::WiFi_Mode(WiFiMode_t m) {
 	return WiFi_Mode(m,false);
 }
 
 // sta disconnect without persistent
-bool NsfdEspWMS::WiFi_Disconnect() {
+bool HirobEspWMSEspWMS::WiFi_Disconnect() {
     #ifdef ESP8266
       if((WiFi.getMode() & WIFI_STA) != 0) {
           bool ret;
@@ -3491,7 +3491,7 @@ bool NsfdEspWMS::WiFi_Disconnect() {
 }
 
 // toggle STA without persistent
-bool NsfdEspWMS::WiFi_enableSTA(bool enable,bool persistent) {
+bool HirobEspWMSEspWMS::WiFi_enableSTA(bool enable,bool persistent) {
 #ifdef WM_DEBUG_LEVEL
     DEBUG_WM(DEBUG_DEV,F("WiFi_enableSTA"),(String) enable? "enable" : "disable");
     #endif
@@ -3524,11 +3524,11 @@ bool NsfdEspWMS::WiFi_enableSTA(bool enable,bool persistent) {
     #endif
 }
 
-bool NsfdEspWMS::WiFi_enableSTA(bool enable) {
+bool HirobEspWMSEspWMS::WiFi_enableSTA(bool enable) {
 	return WiFi_enableSTA(enable,false);
 }
 
-bool NsfdEspWMS::WiFi_eraseConfig() {
+bool HirobEspWMSEspWMS::WiFi_eraseConfig() {
     #ifdef WM_DEBUG_LEVEL
     DEBUG_WM(DEBUG_DEV,F("WiFi_eraseConfig"));
     #endif
@@ -3561,7 +3561,7 @@ bool NsfdEspWMS::WiFi_eraseConfig() {
     #endif
 }
 
-uint8_t NsfdEspWMS::WiFi_softap_num_stations(){
+uint8_t HirobEspWMSEspWMS::WiFi_softap_num_stations(){
   #ifdef ESP8266
     return wifi_softap_get_station_num();
   #elif defined(ESP32)
@@ -3569,11 +3569,11 @@ uint8_t NsfdEspWMS::WiFi_softap_num_stations(){
   #endif
 }
 
-bool NsfdEspWMS::WiFi_hasAutoConnect(){
+bool HirobEspWMSEspWMS::WiFi_hasAutoConnect(){
   return WiFi_SSID(true) != "";
 }
 
-String NsfdEspWMS::WiFi_SSID(bool persistent) const{
+String HirobEspWMSEspWMS::WiFi_SSID(bool persistent) const{
 
     #ifdef ESP8266
     struct station_config conf;
@@ -3604,7 +3604,7 @@ String NsfdEspWMS::WiFi_SSID(bool persistent) const{
     #endif
 }
 
-String NsfdEspWMS::WiFi_psk(bool persistent) const {
+String HirobEspWMSEspWMS::WiFi_psk(bool persistent) const {
     #ifdef ESP8266
     struct station_config conf;
 
@@ -3629,9 +3629,9 @@ String NsfdEspWMS::WiFi_psk(bool persistent) const {
 
 #ifdef ESP32
   #ifdef WM_ARDUINOEVENTS
-  void NsfdEspWMS::WiFiEvent(WiFiEvent_t event,arduino_event_info_t info){
+  void HirobEspWMSEspWMS::WiFiEvent(WiFiEvent_t event,arduino_event_info_t info){
   #else
-  void NsfdEspWMS::WiFiEvent(WiFiEvent_t event,system_event_info_t info){
+  void HirobEspWMSEspWMS::WiFiEvent(WiFiEvent_t event,system_event_info_t info){
     #define wifi_sta_disconnected disconnected
     #define ARDUINO_EVENT_WIFI_STA_DISCONNECTED SYSTEM_EVENT_STA_DISCONNECTED
     #define ARDUINO_EVENT_WIFI_SCAN_DONE SYSTEM_EVENT_SCAN_DONE
@@ -3676,7 +3676,7 @@ String NsfdEspWMS::WiFi_psk(bool persistent) const {
 }
 #endif
 
-void NsfdEspWMS::WiFi_autoReconnect(){
+void HirobEspWMSEspWMS::WiFi_autoReconnect(){
   #ifdef ESP8266
     WiFi.setAutoReconnect(_wifiAutoReconnect);
   #elif defined(ESP32)
@@ -3686,13 +3686,13 @@ void NsfdEspWMS::WiFi_autoReconnect(){
       DEBUG_WM(DEBUG_VERBOSE,F("ESP32 event handler enabled"));
       #endif
       using namespace std::placeholders;
-      if(wm_event_id == 0) wm_event_id = WiFi.onEvent(std::bind(&NsfdEspWMS::WiFiEvent,this,_1,_2));
+      if(wm_event_id == 0) wm_event_id = WiFi.onEvent(std::bind(&HirobEspWMSEspWMS::WiFiEvent,this,_1,_2));
     // }
   #endif
 }
 
 // Called when /update is requested
-void NsfdEspWMS::handleUpdate() {
+void HirobEspWMSEspWMS::handleUpdate() {
   #ifdef WM_DEBUG_LEVEL
 	DEBUG_WM(DEBUG_VERBOSE,F("<- Handle update"));
   #endif
@@ -3711,7 +3711,7 @@ void NsfdEspWMS::handleUpdate() {
 }
 
 // upload via /u POST
-void NsfdEspWMS::handleUpdating(){
+void HirobEspWMSEspWMS::handleUpdating(){
   // @todo
   // cannot upload files in captive portal, file select is not allowed, show message with link or hide
   // cannot upload if softreset after upload, maybe check for hard reset at least for dev, ERROR[11]: Invalid bootstrapping state, reset ESP8266 before updating
@@ -3797,7 +3797,7 @@ void NsfdEspWMS::handleUpdating(){
 }
 
 // upload and ota done, show status
-void NsfdEspWMS::handleUpdateDone() {
+void HirobEspWMSEspWMS::handleUpdateDone() {
 	DEBUG_WM(DEBUG_VERBOSE, F("<- Handle update done"));
 	if (captivePortal()) return; // If captive portal redirect instead of displaying the page
 
